@@ -1,0 +1,45 @@
+battery:
+  capacity: 1
+  efficiency_inflow: 0.98
+  efficiency_outflow: 0.98
+  power: 0.2
+  self_discharge: 1.0e-06
+co2:
+  biomethane: 0
+  el_in: 0.182
+  el_out: 0
+  fossil_gas: 0.0
+  price_el: 0
+  price_gas: 0
+  pv: 0.041
+  wind_turbine: 0.028
+  wood_pellet: 0.0
+demand:
+  dhw: aggregated_demand.csv:kW_dhw_demand
+  electricity: aggregated_demand.csv:kW_el_demand
+  heating: aggregated_demand.csv:kW_th_demand
+energy_cost:
+  electricity:
+    demand_rate: 0
+    eeg_levy: 0.0
+    market: 0.15
+    slp_price: 0.0
+    surcharge: 0.0
+meteorology:
+  temp_air: meteo.csv:temp_air
+pv:
+  feed_in_subsidy: 0
+  nominal_power: 0.125
+  spec_generation: pv_generation.csv:kW
+temperatures:
+  additional:
+  - 80
+  backward_flow: 30
+  dhw: 60
+  forward_flow: 40
+  heat_drop_exchanger_dhw: 5
+  reference: 30
+wind_turbine:
+  feed_in_subsidy: 0
+  nominal_power: 20
+  spec_generation: hydro_generation.csv:kW

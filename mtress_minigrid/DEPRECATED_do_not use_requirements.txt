@@ -1,0 +1,8 @@
+oemof.solph>0.4.2,<0.5
+oemof.thermal>=0.0.5
+pandas~=2.0.3
+pyyaml~=6.0.1
+
+matplotlib~=3.7.2
+numpy~=1.23.5
+setuptools~=65.5.1
