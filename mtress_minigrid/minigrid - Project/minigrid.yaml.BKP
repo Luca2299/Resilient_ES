@@ -1,0 +1,46 @@
+---
+temperatures:
+  reference: 30  # °C
+  dhw: 60  # °C
+  heat_drop_exchanger_dhw: 5  # °C
+  forward_flow: 40  # °C
+  backward_flow: 30  # °C
+  additional:
+  - 80  # °C
+air_source_heat_pump:
+  electric_input: 0.1  # MW
+  cop_0_35: 3.5  # 1
+pv:
+  nominal_power: 1  # MW
+  feed_in_subsidy: 75  # €/MWh
+  spec_generation: pv_generation.csv:PV
+heat_storage:
+  volume: 10  # m³
+  diameter: 2  # m
+  insulation_thickness: 0.1  # m
+energy_cost:
+  electricity:
+    demand_rate: 15000  # €/MW
+    slp_price: 300  # €/MWh
+    surcharge: 130  # €/MWh
+    eeg_levy: 64.123  # €/MWh
+    market: 30  # €/MWh
+  gas:
+    fossil_gas: 35  # €/MWh
+    biomethane: 95  # €/MWh
+    energy_tax: 5.5  # €/MWh
+  wood_pellet: 300  # €/MWh
+meteorology:
+  temp_air: input_data.csv:T_amb
+demand:
+  electricity: aggregated_demand.csv:kW
+  heating: input_data.csv:heating
+  dhw: input_data.csv:dhw
+co2:
+  el_in: 0.427  # t/MWh
+  el_out: 0.427  # t/MWh
+  fossil_gas: 0.202  # t/MWh
+  biomethane: 0.148  # t/MWh
+  wood_pellet: 0.023  # t/MWh
+  price_el: 0  # €/t
+  price_gas: 0  # €/t
