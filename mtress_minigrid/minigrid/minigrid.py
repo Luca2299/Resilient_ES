@@ -16,10 +16,11 @@ import yaml
 import time
 
 ## Variables to declare
+### hola 
 
 # --- Photovoltaic Panels ---
 # Square meters of PV panes
-pv_min = 100
+pv_min = 10
 pv_max = 100
 pv_step = 10
 # cost per qm PV:
