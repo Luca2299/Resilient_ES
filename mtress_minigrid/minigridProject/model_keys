@@ -17,9 +17,10 @@
 15,b_th_in_80,b_th_80
 16,b_th_in_80,b_th_in_40
 17,b_th_in_80,rise_40_80
-18,heat_exchanger,b_th_buildings
-19,m_el_in,b_el_adjacent
-20,rise_40_80,b_th_80
-21,s_battery,None
-22,s_battery,b_elprod
-23,t_pv,b_el_pv
+18,grid_connection,grid_connection
+19,heat_exchanger,b_th_buildings
+20,m_el_in,b_el_adjacent
+21,rise_40_80,b_th_80
+22,s_battery,None
+23,s_battery,b_elprod
+24,t_pv,b_el_pv

@@ -2,11 +2,11 @@ battery:
   capacity: 31
   efficiency_inflow: 0.98
   efficiency_outflow: 0.98
-  power: 6.2
+  power: 25
   self_discharge: 1.0e-06
 co2:
   biomethane: 0
-  el_in: 0.169
+  el_in: 0.166
   el_out: 0
   fossil_gas: 0.0
   price_el: 0
@@ -17,7 +17,7 @@ demand:
   electricity: aggregated_demand.csv:kW_el_demand
   heating: aggregated_demand.csv:kW_th_demand
 energy_cost:
-  electricity:
+  electricity: 
     demand_rate: 0
     eeg_levy: 0.0
     market: 0.15

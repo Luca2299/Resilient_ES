@@ -1,12 +1,12 @@
 battery:
-  capacity: 31
+  capacity: 13
   efficiency_inflow: 0.98
   efficiency_outflow: 0.98
-  power: 6.2
+  power: 2.6
   self_discharge: 1.0e-06
 co2:
   biomethane: 0
-  el_in: 0.169
+  el_in: 0.166
   el_out: 0
   fossil_gas: 0.0
   price_el: 0
@@ -20,14 +20,14 @@ energy_cost:
   electricity:
     demand_rate: 0
     eeg_levy: 0.0
-    market: 0.15
+    market: 0.105
     slp_price: 0.0
     surcharge: 0.0
 meteorology:
   temp_air: meteo.csv:temp_air
 pv:
-  feed_in_subsidy: 0.1
-  nominal_power: 20.0
+  feed_in_subsidy: 0.122
+  nominal_power: 47.96
   spec_generation: pv_generation.csv:kW
 temperatures:
   additional:
