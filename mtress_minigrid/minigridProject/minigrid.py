@@ -19,9 +19,9 @@ import time
 
 # --- Photovoltaic Panels ---
 # Square meters of PV panes
-pv_min = 108 
-pv_max = 526 
-pv_step = 10
+pv_min = 100 #108 
+pv_max = 530 #526 
+pv_step = 100
 
 # PV system specifications
 kwp_per_qm = 0.22 # kWp per square meter
@@ -39,15 +39,16 @@ cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # Total: 118.50 €/q
 
 # ---Electric Storage---
 # Capacity in kWh
-storage_min = 13
-storage_max = 1553
-storage_step = 10
+storage_min = 10 #13
+storage_max = 80 #1553
+storage_step = 40
+storage_price = 600  # €/kWh
 # -----
 
 
 # how many days to run model?
 start_day = 1
-days_to_run = 31
+days_to_run = 365
 #infer_last_interval = True
 #pause before first run
 pause_time = 5
@@ -57,7 +58,7 @@ enable_mg_plots = False
 
 # name of output file for analysis
 # (Change if you simulate a different month! Files with identical names get overwritten!)
-results_filename = 'results_mini_grid_Jan.csv'
+results_filename = 'results_mini_grid_Project.csv'
 #results_filename_dyn = 'DYN_results_mini_grid_Jan.csv'
 ############################################
 
@@ -190,7 +191,7 @@ def calculate_pareto(df):
 
 def calculate_storage_price():
 #Calculate the storage price for the different capacities
-    storage_price = 2000 #$/kWh
+    #storage_price = 2000 #$/kWh
     storage_cost = calculate_storage_cap(i)*storage_price
     return storage_cost
 

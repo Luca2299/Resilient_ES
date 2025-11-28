@@ -1,5 +1,5 @@
 battery:
-  capacity: 31
+  capacity: 
   efficiency_inflow: 0.98
   efficiency_outflow: 0.98
   power: 25
@@ -26,7 +26,7 @@ energy_cost:
 meteorology:
   temp_air: meteo.csv:temp_air
 pv:
-  feed_in_subsidy: 0.1
+  feed_in_subsidy: 0.04
   nominal_power: 20.0
   spec_generation: pv_generation.csv:kW
 temperatures:
