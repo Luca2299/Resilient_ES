@@ -19,9 +19,9 @@ import time
 
 # --- Photovoltaic Panels ---
 # Square meters of PV panes
-pv_min = 100 #108 
-pv_max = 530 #526 
-pv_step = 100
+pv_min = 20 #108 
+pv_max = 100 #526 
+pv_step = 5
 
 # PV system specifications
 kwp_per_qm = 0.22 # kWp per square meter
@@ -40,8 +40,8 @@ cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # Total: 118.50 €/q
 # ---Electric Storage---
 # Capacity in kWh
 storage_min = 10 #13
-storage_max = 80 #1553
-storage_step = 40
+storage_max = 80 #78
+storage_step = 10
 storage_price = 600  # €/kWh
 # -----
 
