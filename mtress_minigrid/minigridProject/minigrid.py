@@ -19,9 +19,9 @@ import time
 
 # --- Photovoltaic Panels ---
 # Square meters of PV panes
-pv_min = 20 #108 
-pv_max = 100 #526 
-pv_step = 5
+pv_min = 100 #108 
+pv_max = 500 #526 
+pv_step = 50
 
 # PV system specifications
 kwp_per_qm = 0.22 # kWp per square meter
@@ -41,14 +41,14 @@ cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # Total: 118.50 €/q
 # Capacity in kWh
 storage_min = 10 #13
 storage_max = 80 #78
-storage_step = 10
+storage_step = 20
 storage_price = 600  # €/kWh
 # -----
 
 
 # how many days to run model?
 start_day = 1
-days_to_run = 365
+days_to_run = 30
 #infer_last_interval = True
 #pause before first run
 pause_time = 5
@@ -92,15 +92,16 @@ def calulate_pv_generation(radiation_data, j):
     # calculate pv generation based on the radiation data calculated before, with respect to kwp, efficiency of pv,
     # square meters.
     pv_generation = pd.DataFrame()
-    pv_generation['kW'] = (((
-            radiation_data['G'] * pv_eff * j/1000)))  # in kWh
+    #pv_generation['kW'] = (((radiation_data['G'] * pv_eff * j/1000)))  # in kWh
+    pv_generation['kW'] = radiation_data['G'] / 1000  # Simple: irradiance ratio
+    
 
     # save pv generation to csv
     pv_generation.to_csv(os.path.join(dir_path, "pv_generation.csv"))
     
     with open(yaml_file_name) as p:
         doc = yaml.load(p, Loader=yaml.FullLoader)
-    pvcap = j*kwp_per_qm # as kWp
+    pvcap = j* kwp_per_qm # as kWp
     doc['pv']['nominal_power'] = pvcap
     with open(yaml_file_name, 'w') as p:
         yaml.safe_dump(doc, p, default_flow_style=False) 
