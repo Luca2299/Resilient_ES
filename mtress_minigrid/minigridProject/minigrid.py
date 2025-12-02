@@ -24,12 +24,28 @@ pv_max = 500 #526
 pv_step = 50
 
 # PV system specifications
-kwp_per_qm = 0.22 # kWp per square meter
-pv_eff = 0.25
+kwp_per_qm = 0.22 # kWp per square meter -> maximal value
+pv_eff = 0.2157  # PV panel efficiency
 
+
+#################
+# without batteries and grid following
+#################
+# inverter_cost_per_kw = 535.19  # €/kW -> grid-forming
+# storage_min = 0
+# storage_max = 0
+# storage_step = 0
+# storage_price = 0
+
+
+#########################
+# with batteries and inverters costs
+########################
 # Inverter specifications
-inverter_efficiency = 0.96  # String inverter efficiency (adjust as needed)
-inverter_cost_per_kw = 150  # €/kW
+inverter_efficiency = 0.95  # String inverter efficiency
+inverter_cost_per_kw = 115.02  # €/kW -> grid-following 
+# inverter_cost_per_kw = 535.19  # €/kW -> grid-forming
+
 
 # Combined cost calculation: PV panels + inverter
 pv_panel_cost_per_qm = 72.98  # Original panel cost
@@ -39,16 +55,16 @@ cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # Total: 118.50 €/q
 
 # ---Electric Storage---
 # Capacity in kWh
-storage_min = 10 #13
+storage_min = 20 #13
 storage_max = 80 #78
 storage_step = 20
-storage_price = 600  # €/kWh
+storage_price = 273.01  # €/kWh
 # -----
 
 
 # how many days to run model?
 start_day = 1
-days_to_run = 30
+days_to_run = 365
 #infer_last_interval = True
 #pause before first run
 pause_time = 5
@@ -101,7 +117,7 @@ def calulate_pv_generation(radiation_data, j):
     
     with open(yaml_file_name) as p:
         doc = yaml.load(p, Loader=yaml.FullLoader)
-    pvcap = j* kwp_per_qm # as kWp
+    pvcap = j*kwp_per_qm # as kWp
     doc['pv']['nominal_power'] = pvcap
     with open(yaml_file_name, 'w') as p:
         yaml.safe_dump(doc, p, default_flow_style=False) 
