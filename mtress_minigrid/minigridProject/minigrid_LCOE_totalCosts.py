@@ -45,7 +45,7 @@ days_to_run = 365
 pause_time = 5
 
 # enable plots?
-enable_mg_plots = False
+enable_mg_plots = True
 
 # name of output file for analysis
 # (Change if you simulate a different month! Files with identical names get overwritten!)
@@ -80,14 +80,14 @@ def calculate_radiation_data():
 
 
 def calulate_pv_generation(radiation_data, j):
-    # calculate pv generation based on the radiation data calculated before, with respect to kwp, efficiency of pv,
-    # square meters.
+    # calculate pv generation based on the radiation data calculated before, with respect to kwp
     pv_generation = pd.DataFrame()
     pv_generation['kW'] = (((
-            radiation_data['G'] * pv_eff * j/1000)))  # in kWh
+            radiation_data['G'] * pv_eff*j/(kwp_per_qm*j*1000))))  # in kWh, 
 
     # save pv generation to csv
-    pv_generation.to_csv(os.path.join(dir_path, "pv_generation.csv"))
+    pv_generation.to_csv(os.path.join(dir_path, "pv_generation.csv")) # in case you enter here the pv output from a pvlib file, it needs to be normalizec by the pv_nom (or kW-peak). M
+    #TRESS multiplies it with the nom capacity according to your areas and resulting nominal power in your steps defined above
     
     with open(yaml_file_name) as p:
         doc = yaml.load(p, Loader=yaml.FullLoader)
