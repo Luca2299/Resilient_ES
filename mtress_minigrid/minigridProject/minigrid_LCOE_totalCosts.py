@@ -19,21 +19,50 @@ import time
 
 # --- Photovoltaic Panels ---
 # Square meters of PV panes
-pv_min = 10
-pv_max = 20
-pv_step = 10
+pv_min = 100 #108 or 56 (for max 20%)
+pv_max = 530 #526 or 212
+pv_step = 50
+
 # cost per qm PV:
-kwp_per_qm = 0.2
-cost_per_qm = 400 # 2000€/kWp
+kwp_per_qm = 0.22
+cost_per_qm = 72.98 # 2000€/kWp
+
 # efficiency:
-pv_eff = 0.25
+pv_eff = 0.2157
 # -----
+
+#################
+# without batteries and grid following
+#################
+# inverter_cost_per_kw = 535.19  # €/kW -> grid-forming 
+#storage_min = 
+#storage_max = 85
+#storage_step = 40
+#storage_price_unit = 273.01
+
+
+#########################
+# with batteries and inverters costs
+########################
+# Inverter specifications
+inverter_efficiency = 0.95  # String inverter efficiency
+inverter_cost_per_kw = 115.02  # €/kW -> grid-following 
+inverter_cost_per_kw = 535.19  # €/kW -> grid-forming
+
+
+# Combined cost calculation: PV panels + inverter
+pv_panel_cost_per_qm = 72.98  # Original panel cost
+inverter_cost_per_qm = kwp_per_qm * inverter_cost_per_kw  # = 0.22 * 150 = 33 €/qm
+cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # Total: 118.50 €/qm
+# -----
+
 
 # ---Electric Storage---
 # Capacity in kWh
-storage_min = 1
-storage_max = 20
-storage_step = 10
+storage_min = 5
+storage_max = 85
+storage_step = 5
+storage_price_unit = 273.01  # €/kWh
 # -----
 
 
@@ -80,14 +109,14 @@ def calculate_radiation_data():
 
 
 def calulate_pv_generation(radiation_data, j):
-    # calculate pv generation based on the radiation data calculated before, with respect to kwp, efficiency of pv,
-    # square meters.
+    # calculate pv generation based on the radiation data calculated before, with respect to kwp
     pv_generation = pd.DataFrame()
     pv_generation['kW'] = (((
-            radiation_data['G'] * pv_eff * j/1000)))  # in kWh
+            radiation_data['G'] * pv_eff*j/(kwp_per_qm*j*1000))))  # in kWh, 
 
     # save pv generation to csv
-    pv_generation.to_csv(os.path.join(dir_path, "pv_generation.csv"))
+    pv_generation.to_csv(os.path.join(dir_path, "pv_generation.csv")) # in case you enter here the pv output from a pvlib file, it needs to be normalizec by the pv_nom (or kW-peak). M
+    #TRESS multiplies it with the nom capacity according to your areas and resulting nominal power in your steps defined above
     
     with open(yaml_file_name) as p:
         doc = yaml.load(p, Loader=yaml.FullLoader)
@@ -180,10 +209,10 @@ def calculate_pareto(df):
     return pareto_front_df
 
 
-def calculate_storage_price():
+#def calculate_storage_price():
 #Calculate the storage price for the different capacities
-    storage_price_unit = 2000 #$/kWh
-    storage_price = (storage_counter*storage_step+storage_min)*storage_price_unit #$/kWh #calculate_storage_price()
+    #storage_price_unit = 2000 #$/kWh
+    #storage_price = (storage_counter*storage_step+storage_min)*storage_price_unit #$/kWh #calculate_storage_price()
     #storage_cost = calculate_storage_cap(i)*storage_price_unit
     return storage_price
 
@@ -198,7 +227,9 @@ def run_loop(radiation_data):
     
     storage_counter = 0
     run_counter = 0
-    storage_cost = (storage_counter*storage_step+storage_min)*2000 #$/kWh #calculate_storage_price()
+    storage_cost = (storage_counter*storage_step+storage_min)*storage_price_unit 
+    
+    #storage_cost = calculate_storage_price()
     
     if enable_mg_plots:
         plot_str = 'Yes (Caution! Plots are generated each run!)'
