@@ -17,53 +17,72 @@ import time
 
 ## Variables to declare
 
-# --- Photovoltaic Panels ---
-# Square meters of PV panes
-pv_min = 100 #108 or 56 (for max 20%)
-pv_max = 530 #526 or 212
-pv_step = 50
-
-# cost per qm PV:
-kwp_per_qm = 0.22
-cost_per_qm = 72.98 # 2000€/kWp
-
-# efficiency:
-pv_eff = 0.2157
-# -----
-
-#################
-# without batteries and grid following
-#################
-# inverter_cost_per_kw = 535.19  # €/kW -> grid-forming 
-#storage_min = 
-#storage_max = 85
-#storage_step = 40
-#storage_price_unit = 273.01
-
-
 #########################
-# with batteries and inverters costs
-########################
-# Inverter specifications
-inverter_efficiency = 0.95  # String inverter efficiency
-inverter_cost_per_kw = 115.02  # €/kW -> grid-following 
-inverter_cost_per_kw = 535.19  # €/kW -> grid-forming
+# SCENARIO SELECTION - CHOOSE ONE:
+# 'scenario_1': Solar + Grid-Following Inverter (grid-connected, no batteries)
+# 'scenario_2': Solar + Batteries + Grid-Forming Inverter (with storage)
+#########################
+SCENARIO = 'scenario_1'  # Change to 'scenario_2' for alternative
 
+# --- Common Parameters (Both Scenarios) ---
+# Photovoltaic Panels
+kwp_per_qm = 0.22
+pv_panel_cost_per_qm = 72.98  # €/qm - Original panel cost
+pv_eff = 0.2157
 
-# Combined cost calculation: PV panels + inverter
-pv_panel_cost_per_qm = 72.98  # Original panel cost
-inverter_cost_per_qm = kwp_per_qm * inverter_cost_per_kw  # = 0.22 * 150 = 33 €/qm
-cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # Total: 118.50 €/qm
-# -----
+if SCENARIO == 'scenario_1':
+    # SCENARIO 1: Solar + Grid-Following Inverter (no batteries)
+    print('Configuration: Solar Panels + Grid-Following Inverter (Grid-Connected)')
+    
+    # PV specifications
+    pv_min = 100
+    pv_max = 530
+    pv_step = 50
+    
+    # Grid-Following Inverter
+    inverter_efficiency = 0.96
+    inverter_cost_per_kw = 115.02  # €/kW
+    inverter_cost_per_qm = kwp_per_qm * inverter_cost_per_kw
+    cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # €98.28/qm
+    cost_per_kwp = cost_per_qm / kwp_per_qm  # €446.73/kWp
+    
+    # No battery storage
+    storage_min = 0
+    storage_max = 0
+    storage_step = 1
+    storage_price_unit = 0  # No batteries in this scenario
+    
+    print(f'Inverter Type: Grid-Following')
+    print(f'Inverter Cost: €{inverter_cost_per_kw}/kW')
+    print(f'System Cost: €{cost_per_qm:.2f}/qm = €{cost_per_kwp:.2f}/kWp')
+    print(f'Battery Storage: None\n')
 
-
-# ---Electric Storage---
-# Capacity in kWh
-storage_min = 5
-storage_max = 85
-storage_step = 5
-storage_price_unit = 273.01  # €/kWh
-# -----
+elif SCENARIO == 'scenario_2':
+    # SCENARIO 2: Solar + Batteries + Grid-Forming Inverter
+    print('Configuration: Solar Panels + Batteries + Grid-Forming Inverter')
+    
+    # PV specifications
+    pv_min = 100
+    pv_max = 530
+    pv_step = 50
+    
+    # Grid-Forming Inverter
+    inverter_efficiency = 0.95
+    inverter_cost_per_kw = 535.19  # €/kW
+    inverter_cost_per_qm = kwp_per_qm * inverter_cost_per_kw
+    cost_per_qm = pv_panel_cost_per_qm + inverter_cost_per_qm  # €190.72/qm
+    cost_per_kwp = cost_per_qm / kwp_per_qm  # €867.73/kWp
+    
+    # Battery storage
+    storage_min = 5
+    storage_max = 85
+    storage_step = 5
+    storage_price_unit = 273.01  # €/kWh
+    
+    print(f'Inverter Type: Grid-Forming')
+    print(f'Inverter Cost: €{inverter_cost_per_kw}/kW')
+    print(f'System Cost: €{cost_per_qm:.2f}/qm = €{cost_per_kwp:.2f}/kWp')
+    print(f'Battery Storage: €{storage_price_unit}/kWh (Range: {storage_min}-{storage_max} kWh)\n')
 
 
 # how many days to run model?
